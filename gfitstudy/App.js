@@ -46,8 +46,9 @@ const App = () => {
             GoogleSignin.signInSilently()
               .then(async signInResponse => {
                 console.log({signInResponse});
-                const tokens = await GoogleSignin.getTokens();
-                console.log({tokens});
+                const googleTokens = await GoogleSignin.getTokens();
+                console.log({googleTokens});
+                // Can hit server with access token
               })
               .catch(signInError => {
                 console.log({signInError});
