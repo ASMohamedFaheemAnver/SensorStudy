@@ -1,7 +1,12 @@
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect, useState} from 'react';
 import {PermissionsAndroid, Text, View} from 'react-native';
 import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
-import {DEFAULT_STEPCOUNT_SOURCE} from './src/constants/strings';
+import {
+  DEFAULT_STEPCOUNT_SOURCE,
+  GOOGLE_EMAIL_SCOPE,
+  WEB_CLIENT_ID,
+} from './src/constants/strings';
 
 const App = () => {
   const [totalSteps, setTotalStep] = useState(0);
@@ -25,8 +30,11 @@ const App = () => {
 
   useEffect(() => {
     console.log({msg: 'App.Mounted'});
+    GoogleSignin.configure({
+      webClientId: WEB_CLIENT_ID,
+    });
     const options = {
-      scopes: [Scopes.FITNESS_ACTIVITY_READ],
+      scopes: [Scopes.FITNESS_ACTIVITY_READ, GOOGLE_EMAIL_SCOPE],
     };
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION,
@@ -34,7 +42,14 @@ const App = () => {
       console.log({permissionResponse});
       if (permissionResponse === PermissionsAndroid.RESULTS.GRANTED) {
         GoogleFit.authorize(options)
-          .then(authRes => {
+          .then(async authRes => {
+            GoogleSignin.signInSilently()
+              .then(signInResponse => {
+                console.log({signInResponse});
+              })
+              .catch(signInError => {
+                console.log({signInError});
+              });
             console.log({authRes});
             GoogleFit.startRecording(recordRes => {
               console.log({recordRes});
@@ -51,6 +66,12 @@ const App = () => {
       } else {
       }
     });
+
+    return async () => {
+      // await GoogleSignin.signOut();
+      // GoogleFit.disconnect();
+      console.log({msg: 'App.Unmounted'});
+    };
   }, []);
 
   return (
