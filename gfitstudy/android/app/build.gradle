@@ -1,4 +1,8 @@
 apply plugin: "com.android.application"
+// UDEV START
+apply plugin: 'com.google.gms.google-services'
+// UDEV END
+
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
