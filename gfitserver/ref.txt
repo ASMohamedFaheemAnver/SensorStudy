@@ -1,2 +1,5 @@
 # No document and example is provided for calling Google Fit (Fitness) APIs
 # https://github.com/googleapis/google-api-nodejs-client/issues/2739
+
+# NodeJS, How to get new token with refresh token using google api?
+# https://stackoverflow.com/questions/61204084/nodejs-how-to-get-new-token-with-refresh-token-using-google-api
