@@ -1,0 +1,2 @@
+# No document and example is provided for calling Google Fit (Fitness) APIs
+# https://github.com/googleapis/google-api-nodejs-client/issues/2739
