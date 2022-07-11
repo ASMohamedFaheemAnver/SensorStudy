@@ -44,8 +44,10 @@ const App = () => {
         GoogleFit.authorize(options)
           .then(async authRes => {
             GoogleSignin.signInSilently()
-              .then(signInResponse => {
+              .then(async signInResponse => {
                 console.log({signInResponse});
+                const tokens = await GoogleSignin.getTokens();
+                console.log({tokens});
               })
               .catch(signInError => {
                 console.log({signInError});
